@@ -1,0 +1,43 @@
+Title:- MPSK
+
+clear all;
+close all;
+clc;
+
+EbN0dB = 10;              % Define the Eb/N0 in dB
+M = 16;                   % Modulation order
+k = log2(M);              % Number of bits per symbol
+n = 3000;                 % Number of symbols
+numSamplesPerSymbol = 1;  % Samples per symbol
+
+% Calculate the SNR in linear scale
+snr = EbN0dB + 10*log10(k) - 10*log10(numSamplesPerSymbol);
+ber = 0;                  % Initialize BER as a scalar
+
+% Generate random data
+datain = randi([0 M-1], n, 1);  % Generate random data
+
+% PSK Modulation
+datamod = exp(1j * (2 * pi * datain / M));
+
+% Add AWGN
+noise = (randn(size(datamod)) + 1j * randn(size(datamod))) / sqrt(2); % AWGN
+receiveSignal = datamod .* 10^(snr/20) + noise;  % Signal power adjustment
+
+% Scatter plot of received and transmitted signals
+scatter(real(receiveSignal), imag(receiveSignal), 'g.');
+hold on;
+scatter(real(datamod), imag(datamod), 'k*');
+
+% PSK Demodulation
+dataOut = mod(round(M * angle(receiveSignal) / (2 * pi)), M); % Demodulate
+
+% Calculate Bit Error Rate (BER)
+[numErrors, ber] = biterr(datain, dataOut);  % Calculate BER
+fprintf('\nThe bit error rate = %5.2e, based on %d errors\n', ber, numErrors);
+
+hold off; % Release the hold on the plot
+xlabel('In-phase');
+ylabel('Quadrature');
+title('Received vs Transmitted Signals');
+grid on; % Add grid for better visualization
