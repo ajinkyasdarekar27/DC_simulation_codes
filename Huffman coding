@@ -1,0 +1,43 @@
+clc;
+clear all;
+close all;
+pkg load communications
+symbols =1:5;
+p=[0.40 0.20 0.20 0.10 0.10 ];
+disp("\n Symbols are");
+disp(symbols);
+disp("length of symbols=");
+disp(length(symbols));
+disp("\n respective probabilities are");
+disp(p);
+dict=huffmandict(symbols,p);
+disp("\nhuffman dictionary is");
+disp(dict);
+inputSig=randsrc(10,1,[symbols;p]);
+disp("\n input symbols are");
+disp(inputSig);
+code=huffmanenco(inputSig,dict);
+disp("\n encoded message is:");
+disp(code);
+decode=huffmandeco(code,dict);
+disp("\n decoded message is:");
+disp(decode);
+
+avg_code_len=0;
+for i=1:length(symbols)
+  x=p(i)*length(dict(1:i));
+  avg_code_len=avg_code_len+x;
+end
+disp("avg_code_len");
+disp(avg_code_len);
+H=-sum(p.*log2(p));
+disp("Entropy=:");
+disp(H);
+
+efficiency=H/avg_code_len;
+disp("efficiency=");
+disp(efficiency);
+
+redundancy=1-efficiency;
+disp("redundancy:")
+disp(redundancy);
