@@ -1,0 +1,70 @@
+Title:- Linear Block Code
+
+% Linear Block Code
+
+clc;
+clear all;
+
+% Input for the length of codeword and parity matrix
+x = input('Enter the length of codeword: ');
+y = input('Enter the length of arbitrary matrix: ');
+
+% Calculate the number of information bits
+k = x - y;
+
+% Create an identity matrix of size k
+A1 = eye(k);
+
+% Define the parity matrix B (size k × y)
+B = randi([0 1], k, y); % You can replace this with a custom matrix
+
+% Create the generator matrix G by concatenating the identity matrix and the parity matrix
+G = [A1 B];
+disp('Generator matrix G:');
+disp(G);
+
+% Transpose of the parity matrix
+p1 = transpose(B);
+
+% Create an identity matrix of size y
+I = eye(y);
+
+% Create the parity-check matrix H by concatenating the transpose of B and the identity matrix
+H = [p1 I];
+disp('Parity-check matrix H:');
+disp(H);
+
+% Transpose of H for syndrome calculation
+Ht = transpose(H);
+disp('Transpose-check matrix Ht:');
+disp(Ht);
+
+% Input the received bit sequence
+r = input('Enter received bit sequence: ');
+
+% Calculate the syndrome
+p = rem(r * Ht, 2);
+disp('Syndrome matrix:');
+disp(p);
+
+% Initialize the error vector
+e = zeros(1, x);
+
+% Error detection and correction (single-bit error model)
+for j = 1:x
+    test = zeros(1, x);
+    test(j) = 1;
+    syndrome = rem(test * Ht, 2);
+    if isequal(syndrome, p)
+        e(j) = 1;
+        break;
+    end
+end
+
+disp('Error vector:');
+disp(e);
+
+% Correct the received codeword
+corrected = rem(r + e, 2);
+disp('Corrected codeword:');
+disp(corrected);
