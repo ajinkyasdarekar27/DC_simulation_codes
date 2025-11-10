@@ -1,0 +1,88 @@
+Title:- Random Process
+clc;
+clear all;
+close all;
+pkg load statistics;
+
+% Plotting Case-1:
+m=0; % mean=0
+sd=1; %standard deviation =1
+x = -6:0.1:6;
+y = normpdf(x,m,sd);
+
+figure(1);
+subplot(2,3,1);
+plot(x,y,'b');
+axis([-6 6 0 1]);
+xlabel('x values');
+ylabel('PDF');
+title('CASE-1: mean = 0, std dev=1');
+grid on;
+
+% Plotting Case-2
+m=1; %mean=1
+sd=1; %standard deviation=1
+y= normpdf(x,m,sd);
+
+subplot(2,3,2);
+plot(x,y,'r');
+axis([-6 6 0 1]);
+xlabel('x values');
+ylabel('PDF');
+title('CASE-2: mean = 1, std dev = 1');
+grid on;
+
+% Plotting Case-3
+m=-1; %mean=-1
+sd=1; %standard deviation=1
+y= normpdf(x,m,sd);
+
+subplot(2,3,3);
+plot(x,y,'g');
+axis([-6 6 0 1]);
+xlabel('x values');
+ylabel('PDF');
+title('CASE-3: mean =- 1, std dev = 1');
+grid on;
+
+% Plotting Case-4
+m=0; %mean=0
+sd=1.5; %standard deviation=1.5
+y= normpdf(x,m,sd);
+
+subplot(2,3,4);
+plot(x,y,'m');
+axis([-6 6 0 0.5]);
+xlabel('x values');
+ylabel('PDF');
+title('CASE-4: mean =0, std dev = 1.5');
+grid on;
+
+% Plotting Case-5
+m=0; %mean=0
+sd=0.5; %standard deviation=0.5
+y= normpdf(x,m,sd);
+
+subplot(2,3,5);
+plot(x,y,'c');
+axis([-6 6 0 1]);
+xlabel('x values');
+ylabel('PDF');
+title('CASE-5: mean =0, std dev = 0.5');
+grid on;
+
+% Plotting Case-6
+m=1; %mean=1
+sd=0.5; %standard deviation=0.5
+y= normpdf(x,m,sd);
+
+subplot(2,3,6);
+plot(x,y,'k');
+axis([-6 6 0 1]);
+xlabel('x values');
+ylabel('PDF');
+title('CASE-6:mean =1, std dev=0.5');
+grid on;
+
+%adjust layout to prevent overlap
+set(gcf, 'Position',[100,100,1200,600]);%Set figure size
