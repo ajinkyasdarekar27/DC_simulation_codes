@@ -1,0 +1,19 @@
+Disp(‘convolution code’);
+D=input (‘enter the data vector ‘);
+n= length(d);
+m=0;
+m1=0;
+m2=0;
+v=blanks(4,*n);
+disp(‘the output sequence is’);
+for i=1:1:n
+      m2=m1;
+      m1=m;
+      m=d(i);
+      v1(i)=m+m1+m2;
+      v1(i)=rem(v1(i),2);
+      v2(i)= m+m2;
+       v2(i)=rem(v2(i),2);
+       v(4*i-1:4*i)= [mat2str(v1(i)), mat2str(v2(i)))];
+end
+disp(v);
